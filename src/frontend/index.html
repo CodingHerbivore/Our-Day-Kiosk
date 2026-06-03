@@ -8,18 +8,49 @@
             name="description"
             content="A home page for us. Time, weather, events and more."
         />
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+            rel="stylesheet"
+        />
+
+        <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
         <link rel="stylesheet" type="text/css" href="/css/style.css" />
+        <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script type="module" src="/js/app.js" defer></script>
     </head>
     <body>
-        <div>
+        <div class="container-fluid text-center" id="title">
             <h1>Our Day Kiosk</h1>
         </div>
-        <div class="info">
-            <div id="ourClock">
-                <div id="ourDay"></div>
-                <div id="ourTime"></div>
+        <div class="container-fluid vh-100">
+            <div class="row">
+                <div class="col col-6">
+                    <div
+                        id="timeAndDate"
+                        class="container align-items-center justify-content-center"
+                    >
+                        <span id="ourDate"></span>
+                        <span id="ourTime"></span>
+                    </div>
+                </div>
+                <div class="col"></div>
+                <div class="col"></div>
+            </div>
+            <div class="row">
+                <div class="col">Test</div>
+                <div class="col">Some</div>
+                <div class="col">Column</div>
+                <div class="col">Widths</div>
+            </div>
+            <div class="row">
+                <div class="col"></div>
+                <div class="col"></div>
+                <div class="col"></div>
+                <div class="col"></div>
             </div>
         </div>
-        <script type="module" src="/js/app.js" defer></script>
     </body>
 </html>

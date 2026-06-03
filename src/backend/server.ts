@@ -15,6 +15,12 @@ fastify.register(fastifyStatic, {
   prefix: "/",
 });
 
+fastify.register(fastifyStatic, {
+  root: path.resolve(__dirname, "../../node_modules/bootstrap/dist"),
+  prefix: "/bootstrap/",
+  decorateReply: false,
+});
+
 // Start the server
 const start = async () => {
   try {

@@ -1,5 +1,5 @@
 function updateClock(): void {
-  const dateElement = document.getElementById("ourDay");
+  const dateElement = document.getElementById("ourDate");
   const timeElement = document.getElementById("ourTime");
   const timeDateString = new Date();
 
