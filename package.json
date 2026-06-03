@@ -5,14 +5,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "tsx watch src/backend/server.ts"
+    "dev:server": "tsx watch src/backend/server.ts",
+    "dev:client": "tsc src/frontend/ts/app.ts --outDir src/frontend/js --target es2022 --lib dom,es2022 --watch --ignoreConfig",
+    "dev": "concurrently \"npm:dev:server\" \"npm:dev:client\""
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^25.9.1",
+    "concurrently": "^10.0.3",
     "tsx": "^4.22.4",
     "typescript": "^6.0.3"
   },
