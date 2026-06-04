@@ -1,20 +1,10 @@
-function updateClock(): void {
-  const dateElement = document.getElementById("ourDate");
-  const timeElement = document.getElementById("ourTime");
-  const timeDateString = new Date();
+import { updateClock } from "./components/clock.js";
+import { showWeather } from "./components/open-meteo.js";
 
-  if (!timeElement || !dateElement) return;
+document.addEventListener("DOMContentLoaded", () => {
+  updateClock();
+  setInterval(updateClock, 10000);
 
-  dateElement.textContent = timeDateString.toLocaleDateString("en-US", {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-  timeElement.textContent = timeDateString.toLocaleTimeString("en-US", {
-    timeStyle: "short",
-  });
-}
-
-updateClock();
-setInterval(updateClock, 10000);
+  showWeather();
+  setInterval(showWeather, 3600000);
+});

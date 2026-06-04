@@ -1,5 +1,6 @@
 import Fastify from "fastify";
 import fastifyStatic from "@fastify/static";
+import weatherRoutes from "./routes/open-meteo.js";
 import path from "path";
 import { fileURLToPath } from "url";
 
@@ -20,6 +21,8 @@ fastify.register(fastifyStatic, {
   prefix: "/bootstrap/",
   decorateReply: false,
 });
+
+fastify.register(weatherRoutes);
 
 // Start the server
 const start = async () => {
