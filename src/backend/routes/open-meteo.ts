@@ -34,7 +34,7 @@ export default async function weatherRoutes(fastify: FastifyInstance) {
   // Fetch immediately when the server starts up...
   updateWeatherCache();
   // ...and then fetch again every 2 hours (2 hrs * 60 mins * 60 secs * 1000 ms)
-  setInterval(updateWeatherCache, 2 * 60 * 60 * 1000);
+  setInterval(updateWeatherCache, 900000);
 
   // 4. The API Endpoint
   // This is what your frontend fetch() calls: http://localhost/api/weather
