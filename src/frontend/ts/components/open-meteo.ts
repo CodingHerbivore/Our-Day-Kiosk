@@ -6,15 +6,15 @@ function getWeatherIconName(code: number): string {
     1: "mostly_sunny.svg", // Mainly Clear
     2: "partly_cloudy.svg", // Partly Cloudy
     3: "cloudy.svg", // Overcast
-    45: "fog.svg", // Fog
-    48: "fog.svg", // Fog with Rain
+    45: "haze_fog_dust_smoke.svg", // Fog
+    48: "haze_fog_dust_smoke.svg", // Fog with Rain
     51: "drizzle.svg", // Light Drizzle
     53: "drizzle.svg", // Moderate Drizzle
     55: "drizzle.svg", // Dense Drizzle
     56: "sleet.svg", // Light Freezing Drizzle
     57: "sleet.svg", // Dense Freezing Drizzle
-    61: "rain.svg", // Slight Rain
-    63: "rain.svg", // Moderate Rain
+    61: "drizzle.svg", // Slight Rain
+    63: "showers_rain.svg", // Moderate Rain
     65: "heavy_rain.svg", // Heavy Rain
     66: "sleet.svg", // Light Freezing Rain
     67: "sleet.svg", // Heavy Freezing Rain
@@ -22,8 +22,8 @@ function getWeatherIconName(code: number): string {
     73: "showers_snow.svg", // Moderate Snow
     75: "showers_snow.svg", // Heavy Snow
     77: "heavy_snow.svg", // Snow Grains
-    80: "showers.svg", // Slight Rain
-    81: "showers.svg", // Moderate Rain
+    80: "drizzle.svg", // Slight Rain
+    81: "showers_rain.svg", // Moderate Rain
     82: "heavy_rain.svg", // Heavy Rain
     85: "snow_showers.svg", // Slight Snow Showers
     86: "snow_showers.svg", // Heavy Snow Showers
@@ -64,6 +64,32 @@ export async function showWeather(): Promise<void> {
 
     weatherElement.innerHTML = weatherDisplay;
 
+    const currentTempDisplay = document.getElementById("current-temp");
+    currentTempDisplay.innerText = currentTemp;
+
+    //const lastTimeDisplay = document.getElementById("update-time");
+    //lastTimeDisplay.innerText = str;
+
+    function formatWeatherForecast(data: weatherInput): ProcessedWeather[] {
+      const { time, weather_code, temperature_2m_max, temperature_2m_min } =
+        data.daily;
+
+      return time.map((dateStr, index) => {
+        const dateObj = new Date(`${dateStr}T00:00:00`);
+        const dayOfWeek = dateObj.toLocaleDateString("en-US", {
+          weekday: "short",
+        });
+
+        return {
+          date: dateStr,
+          dayOfWeek: dayOfWeek,
+          weatherCode: weather_code[index],
+          maxTemp: temperature_2m_max[index],
+          minTemp: temperature_2m_min[index],
+        };
+      });
+    }
+
     // Resolve and display the weather icon
     const weatherIconDisplay = document.getElementById(
       "weather-icon",
@@ -74,14 +100,29 @@ export async function showWeather(): Promise<void> {
       weatherIconDisplay.src = `/images/icons/weather/${iconFile}`;
     }
 
-    const currentTempDisplay = document.getElementById("current-temp");
-    currentTempDisplay.innerText = currentTemp;
+    const formattedForecast = formatWeatherForecast(data);
+    const todayForecast = formattedForecast.shift();
+    let weekForecast = document.getElementById("forecast");
 
-    const lastTimeDisplay = document.getElementById("update-time");
-    lastTimeDisplay.innerText = lastTime;
-    // -- FUTURE LOGIC GOES HERE --
-    // Extract the 5-day forecast from data.daily
-    // Extract the 6-hour forecast from data.hourly
+    for (const day of formattedForecast) {
+      const forecastWeekday = day.dayOfWeek;
+      const forecastCode = day.weatherCode;
+      const forecastMin = day.minTemp;
+      const forecastMax = day.maxTemp;
+
+      const iconFile = getWeatherIconName(forecastCode);
+
+      const forecastDiv = `
+        <div>
+        <h2 class="card-title">${forecastWeekday}</h2>
+        <div class="my-3">
+          <img id="weather-icon" src="/images/icons/weather/${iconFile}" alt="Weather Condition" style="width: 32px; height: 32px;" />
+        </div>
+        <h2 class="display-8">${forecastMin}/${forecastMax}°F</h2>
+        </div>`;
+
+      weekForecast.insertAdjacentHTML("beforeend", forecastDiv);
+    }
   } catch (error) {
     console.error("Failed to load weather widget:", error);
     weatherElement.textContent = "Weather unavailable";

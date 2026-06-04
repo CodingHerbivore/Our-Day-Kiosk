@@ -47,3 +47,6 @@ p {
     font-size: clamp(2rem, 10vw, 7rem);
     color: ivory;
 }
+#forecast {
+    display: flex;
+}

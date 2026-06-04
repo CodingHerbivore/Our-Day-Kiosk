@@ -4,5 +4,5 @@ document.addEventListener("DOMContentLoaded", () => {
     updateClock();
     setInterval(updateClock, 10000);
     showWeather();
-    setInterval(showWeather, 3600000);
+    setInterval(showWeather, 900000);
 });
